@@ -101,3 +101,72 @@ void add() {
     system("pause");
 }
 
+// View all customer records
+void list() {
+    FILE *file = fopen("hotel_records.txt", "r");
+    if (!file) {
+        printf("No records found.\n");
+        return;
+    }
+
+    system("cls");
+    printf("********** CUSTOMER RECORDS **********\n");
+
+    while (fread(&customer, sizeof(customer), 1, file)) {
+        printf("\nRoom Number: %s", customer.roomnumber);
+        printf("\nRoom Type: %s", customer.roomtype);
+        printf("\nName: %s", customer.name);
+        printf("\nAddress: %s", customer.address);
+        printf("\nPhone Number: %s", customer.phonenumber);
+        printf("\nNationality: %s", customer.nationality);
+        printf("\nEmail: %s", customer.email);
+        printf("\nPeriod of Stay: %s", customer.period);
+        printf("\nArrival Date: %s", customer.arrivaldate);
+        printf("\nAadhar Card: %s", customer.aadharcard);
+        printf("\nPAN Card: %s", customer.pancard);
+        printf("\n------------------------------------");
+    }
+
+    fclose(file);
+    system("pause");
+}
+
+// Delete a customer record
+void delete1() {
+    FILE *file = fopen("hotel_records.txt", "r");
+    FILE *temp = fopen("temp.txt", "w");
+    char roomnumber[10];
+    int found = 0;
+
+    if (!file || !temp) {
+        printf("Error opening file!\n");
+        return;
+    }
+
+    system("cls");
+    printf("Enter the Room Number to delete: ");
+    scanf("%s", roomnumber);
+
+    while (fread(&customer, sizeof(customer), 1, file)) {
+        if (strcmp(customer.roomnumber, roomnumber) != 0) {
+            fwrite(&customer, sizeof(customer), 1, temp);
+        } else {
+            found = 1;
+        }
+    }
+
+    fclose(file);
+    fclose(temp);
+
+    remove("hotel_records.txt");
+    rename("temp.txt", "hotel_records.txt");
+
+    if (found) {
+        printf("\nRecord deleted successfully!\n");
+    } else {
+        printf("\nRecord not found!\n");
+    }
+
+    system("pause");
+}
+
