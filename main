@@ -212,3 +212,106 @@ void search() {
     system("pause");
 }
 
+// Edit a customer record
+void edit() {
+    FILE *file = fopen("hotel_records.txt", "r+");
+    char roomnumber[10];
+    int found = 0;
+
+    if (!file) {
+        printf("No records found.\n");
+        return;
+    }
+
+    system("cls");
+    printf("Enter the Room Number to edit: ");
+    scanf("%s", roomnumber);
+
+    while (fread(&customer, sizeof(customer), 1, file)) {
+        if (strcmp(customer.roomnumber, roomnumber) == 0) {
+            printf("\nEnter new details:\n");
+            printf("Enter Room Type: ");
+            scanf("%s", customer.roomtype);
+            printf("Enter Name: ");
+            scanf("%s", customer.name);
+            printf("Enter Address: ");
+            scanf("%s", customer.address);
+            printf("Enter Phone Number: ");
+            scanf("%s", customer.phonenumber);
+            printf("Enter Nationality: ");
+            scanf("%s", customer.nationality);
+            printf("Enter Email: ");
+            scanf("%s", customer.email);
+            printf("Enter Period of Stay: ");
+            scanf("%s", customer.period);
+            printf("Enter Arrival Date: ");
+            scanf("%s", customer.arrivaldate);
+            printf("Enter Aadhar Card Number: ");
+            scanf("%s", customer.aadharcard);
+            printf("Enter PAN Card Number: ");
+            scanf("%s", customer.pancard);
+
+            fseek(file, -sizeof(customer), SEEK_CUR);
+            fwrite(&customer, sizeof(customer), 1, file);
+            found = 1;
+            break;
+        }
+    }
+
+    fclose(file);
+
+    if (found) {
+        printf("\nRecord updated successfully!\n");
+    } else {
+        printf("\nRecord not found.\n");
+    }
+
+    system("pause");
+}
+
+// Main function
+int main() {
+    char choice;
+
+    login();
+
+    while (1) {
+        system("cls");
+        printf("********** HOTEL MANAGEMENT SYSTEM **********\n");
+        printf("1. Book a Room\n");
+        printf("2. View Customer Records\n");
+        printf("3. Delete a Customer Record\n");
+        printf("4. Search a Customer Record\n");
+        printf("5. Edit a Customer Record\n");
+        printf("6. Exit\n");
+        printf("\nEnter your choice: ");
+        choice = getch();
+        printf("%c\n", choice);
+
+        switch (choice) {
+            case '1':
+                add();
+                break;
+            case '2':
+                list();
+                break;
+            case '3':
+                delete1();
+                break;
+            case '4':
+                search();
+                break;
+            case '5':
+                edit();
+                break;
+            case '6':
+                printf("\nThank you for using the system!\n");
+                exit(0);
+            default:
+                printf("\nInvalid choice. Try again.\n");
+                system("pause");
+        }
+    }
+
+    return 0;
+}
