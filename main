@@ -170,3 +170,45 @@ void delete1() {
     system("pause");
 }
 
+// Search for a customer record
+void search() {
+    FILE *file = fopen("hotel_records.txt", "r");
+    char roomnumber[10];
+    int found = 0;
+
+    if (!file) {
+        printf("No records found.\n");
+        return;
+    }
+
+    system("cls");
+    printf("Enter the Room Number to search: ");
+    scanf("%s", roomnumber);
+
+    while (fread(&customer, sizeof(customer), 1, file)) {
+        if (strcmp(customer.roomnumber, roomnumber) == 0) {
+            printf("\nRoom Number: %s", customer.roomnumber);
+            printf("\nRoom Type: %s", customer.roomtype);
+            printf("\nName: %s", customer.name);
+            printf("\nAddress: %s", customer.address);
+            printf("\nPhone Number: %s", customer.phonenumber);
+            printf("\nNationality: %s", customer.nationality);
+            printf("\nEmail: %s", customer.email);
+            printf("\nPeriod of Stay: %s", customer.period);
+            printf("\nArrival Date: %s", customer.arrivaldate);
+            printf("\nAadhar Card: %s", customer.aadharcard);
+            printf("\nPAN Card: %s", customer.pancard);
+            found = 1;
+            break;
+        }
+    }
+
+    fclose(file);
+
+    if (!found) {
+        printf("\nRecord not found.\n");
+    }
+
+    system("pause");
+}
+
