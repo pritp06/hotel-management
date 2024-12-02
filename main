@@ -61,3 +61,43 @@ void login() {
     printf("\nToo many failed attempts. Exiting...\n");
     exit(1);
 }
+
+// Add customer record
+void add() {
+    FILE *file = fopen("hotel_records.txt", "a");
+    if (!file) {
+        printf("Error opening file!\n");
+        return;
+    }
+
+    system("cls");
+    printf("********** ADD NEW CUSTOMER **********\n");
+    printf("Enter Room Number: ");
+    scanf("%s", customer.roomnumber);
+    printf("Enter Room Type (Single/Double): ");
+    scanf("%s", customer.roomtype);
+    printf("Enter Name: ");
+    scanf("%s", customer.name);
+    printf("Enter Address: ");
+    scanf("%s", customer.address);
+    printf("Enter Phone Number: ");
+    scanf("%s", customer.phonenumber);
+    printf("Enter Nationality: ");
+    scanf("%s", customer.nationality);
+    printf("Enter Email: ");
+    scanf("%s", customer.email);
+    printf("Enter Period of Stay: ");
+    scanf("%s", customer.period);
+    printf("Enter Arrival Date (DD/MM/YYYY): ");
+    scanf("%s", customer.arrivaldate);
+    printf("Enter Aadhar Card Number: ");
+    scanf("%s", customer.aadharcard);
+    printf("Enter PAN Card Number: ");
+    scanf("%s", customer.pancard);
+
+    fwrite(&customer, sizeof(customer), 1, file);
+    fclose(file);
+    printf("\nCustomer added successfully!\n");
+    system("pause");
+}
+
