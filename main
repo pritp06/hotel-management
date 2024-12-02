@@ -1,0 +1,63 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <conio.h> 
+
+// Structure for customer details
+struct CustomerDetails {
+    char roomnumber[10];
+    char roomtype[10];
+    char name[30];
+    char address[50];
+    char phonenumber[15];
+    char nationality[20];
+    char email[50];
+    char period[10];
+    char arrivaldate[15];
+    char aadharcard[20];
+    char pancard[20];
+} customer;
+
+// Function declarations
+void login();
+void add();
+void list();
+void delete1();
+void search();
+void edit();
+
+// Login function
+void login() {
+    char username[10], password[10], ch;
+    const char valid_user[] = "prit";
+    const char valid_pass[] = "prit0606";
+    int attempts = 0;
+
+    do {
+        system("cls"); // Clear the screen
+        printf("********** LOGIN **********\n");
+        printf("\nUsername: ");
+        scanf("%s", username);
+
+        printf("Password: ");
+        int i = 0;
+        while ((ch = getch()) != '\r') { // Enter key stops input
+            password[i++] = ch;
+            printf("*");
+        }
+        password[i] = '\0';
+
+        if (strcmp(username, valid_user) == 0 && strcmp(password, valid_pass) == 0) {
+            printf("\n\nLogin successful!\n");
+            system("pause");
+            return;
+        } else {
+            printf("\n\nInvalid username or password.\n");
+            attempts++;
+            system("pause");
+        }
+    } while (attempts < 3);
+
+    printf("\nToo many failed attempts. Exiting...\n");
+    exit(1);
+}
